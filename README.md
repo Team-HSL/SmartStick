@@ -12,8 +12,10 @@ Wi-fiもBluetoothも搭載した有能マイコン．開発環境はESP-IDF，AR
 
 Arduino-IDEを用いる際はボードの設定を行う必要があります．
 - 参考：https://www.mgo-tec.com/arduino-core-esp32-install
-macで開発を行う場合は，ポートを認識させるために下のドライバのインストールが必要です．
-- 
+
+macで開発を行う場合は，ポートを認識させるために下のドライバのインストールが必要です．以下のURLからMacのものをダウンロード，インストールしてください．
+- https://jp.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers#mac
+
 macOSがHigh Sierraになあなたは開発できません．残念．VirtualboxでWin10を導入して試しましたがダメでした．
 Bootcampは試してません．誰かやってください．
 
