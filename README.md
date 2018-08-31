@@ -7,7 +7,7 @@ ROHM open hack challengeに提出する「SmartStick」に関わる全コード�
 + Android　Studioプロジェクト: SmartStick_HSL    
 
 
-### ESP32
+## ESP32
 Wi-fiもBluetoothも搭載した有能マイコン．開発環境はESP-IDF，ARduino IDE，Micro Pythonから選択できますが，Arduino IDEが良いでしょう．調べた時の参考資料の数が最も多いです．また，MicroPythonでは使える機能の制限が酷く，なんとBluetoothを使えません．これはだめだ．詳細を知りたい方は雑誌『インターフェース』のESP32の特集やってる一冊を読むと良いです．
 
 Arduino-IDEを用いる際はボードの設定を行う必要があります．
@@ -21,7 +21,7 @@ Bluetooth Classic と Bluetooth Low Energy (BLE)は異なる規格です．ESP32
 利用する規格により実装が異なります．SmartStickではBluetooth Classicを使います．
 
 
-### Androidアプリ
+## Androidアプリ
 Android Studioで開発を行います．言語はJava．
 アプリ起動前にAndroid端末のBluetoothをONにしておく必要があります．OFFのまま起動すると，落ちます．
 ESP32とのペアリングは必須ではないはずです．
