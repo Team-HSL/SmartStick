@@ -1,6 +1,12 @@
 # SmartStickのリポジトリ
 ROHM open hack challengeに提出する「SmartStick」に関わる全コード．
 
+ちなみにこのテキストファイルは拡張子が「.md」となっていますが，これは「Markdown」を表しています．Markdownは記法の名前です．
+
+Markdown記法により段落や箇条書きなどを実現することができます．Markdownの記法は色々調べてみてください．このファイル自体を編集してみるのも良いと思います．
+
+#### みんなで読みやすいドキュメントを残しましょう．
+
 ## 構成
 + ~~ESP32に書き込むコード: BLE_send.ino~~  <- 削除します．
 + ESP32に書き込むコード:      Bluetooth_Classic_send.ino
