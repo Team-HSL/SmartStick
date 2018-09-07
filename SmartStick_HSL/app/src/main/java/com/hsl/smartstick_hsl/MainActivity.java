@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         TextView txt_debug;
         String state1, state2, ConType; // try-except分岐のデバッグ用
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // ボタンのインスタンスを取得
