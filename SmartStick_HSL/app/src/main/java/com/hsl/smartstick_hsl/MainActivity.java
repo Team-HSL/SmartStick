@@ -3,7 +3,7 @@ package com.hsl.smartstick_hsl;
 // bluetoothのクラス
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
+//import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,19 +18,27 @@ import java.io.IOException;
 // UUID 通信方式
 import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
-    private BluetoothAdapter mBluetoothAdapter; // BTアダプタ
-    private BluetoothDevice mBtDevice; // BTデバイス
+    //    private BluetoothAdapter mBluetoothAdapter; // BTアダプタ
+//    private BluetoothDevice mBtDevice; // BTデバイス
     private BluetoothSocket mBtSocket; // BTソケット
     private InputStream mInput; // 出力ストリーム
     private OutputStream mOutput; // 出力ストリーム
-    private Button btn_f, btn_b, btn_l, btn_r, btn_c; // 送信ボタン
-    private TextView txt1, txt_debug;
+    //    private Button btn_f, btn_b, btn_l, btn_r, btn_c; // 送信ボタン
+    private Button btn_c;
+    //    private TextView txt1, txt_debug;
     private int count=0;
-    private String state1="---", state2="---", stateConnect_bef, stateConnect_aft, ConType; // try-except分岐のデバッグ用
-    private BluetoothServerSocket mBtServerSockets;
+//    private String state1="---", state2="---", stateConnect_bef, stateConnect_aft, ConType; // try-except分岐のデバッグ用
+//    private BluetoothServerSocket mBtServerSockets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        BluetoothAdapter mBluetoothAdapter; // BTアダプタ
+        BluetoothDevice mBtDevice; // BTデバイス
+        Button btn_f, btn_b, btn_l, btn_r; // 送信ボタン
+        TextView txt_debug;
+        String state1, state2, ConType; // try-except分岐のデバッグ用
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // ボタンのインスタンスを取得
@@ -39,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         btn_l = findViewById(R.id.button_l);
         btn_r = findViewById(R.id.button_r);
         btn_c = findViewById(R.id.button_count);
-//        txt1 = findViewById(R.id.Bluetoothtext);
         txt_debug = findViewById(R.id.debugTxt);
         // BTの準備 --------------------------------------------------------------
         // BTアダプタのインスタンスを取得
@@ -48,22 +55,14 @@ public class MainActivity extends AppCompatActivity {
         mBtDevice = mBluetoothAdapter.getRemoteDevice("30:AE:A4:3A:12:16");
         // BTソケットのインスタンスを取得。ソケット通信の準備
         try {
-//            //connect()の前にsocketのaccept
-//            mBtServerSocket = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(
-//                    this.getPackageName(), UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
-//            mBtSocket = mBtServerSocket.accept();
-
             // 接続に使用するプロファイルを指定
             mBtSocket = mBtDevice.createRfcommSocketToServiceRecord(
                     UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
-//                    UUID.fromString("00001400-0000-1000-8000-00805F9B34FB"));
 
             state1 = "OK";
-//            txt1.setText("socket instance ok");
         } catch (IOException e) {
             e.printStackTrace();
             state1 = "NG";
-            //            txt1.setText("socket instance NG!");
         }
 
         ConType = String.valueOf(mBtSocket.getConnectionType());
@@ -80,11 +79,18 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             state2 = "NG";
         }
-        txt_debug.setText("device name :" + mBtDevice.getName() + "(" + mBtDevice.getAddress() + ")\n"
-                + "socket instance :" + state1 + "\n"
-                + "socket connection Type :" + ConType + "\n"
-                + "socket connect :" + state2 + "\n"
+//        txt_debug.setText("device name :" + mBtDevice.getName() + "(" + mBtDevice.getAddress() + ")\n"
+//                + "socket instance :" + state1 + "\n"
+//                + "socket connection Type :" + ConType + "\n"
+//                + "socket connect :" + state2 + "\n"
+//        );
+
+        txt_debug.setText(
+                String.format("device name : %s (%s)\nsocket instance : %s \nsocket connection Type :%s\nsocket connect :%s\n"
+                        ,mBtDevice.getName(),mBtDevice.getAddress(), state1, ConType,state2)
         );
+
+
         //各ボタン押下時の挙動設定
         //
         btn_f.setOnClickListener(new View.OnClickListener() {
@@ -102,13 +108,13 @@ public class MainActivity extends AppCompatActivity {
                         String message = new String(buffer, 0, bytes);
                         Log.d("onClick", message);
                         try {
-                            Thread.sleep(10000);
+                            Thread.sleep(100);
                         }catch(InterruptedException e) {
-                        e.printStackTrace();
+                            e.printStackTrace();
                         }
 
                         btn_c.setText(message);
-                        //btn_c.setText(String.valueOf(bytes));
+                        btn_c.setText(String.valueOf(bytes));
                     } catch (IOException e) {
                         break;
                     }
