@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private InputStream mInput; // 出力ストリーム
     private OutputStream mOutput; // 出力ストリーム
     //    private Button btn_f, btn_b, btn_l, btn_r, btn_c; // 送信ボタン
-    private Button btn_c;
+    private Button btn_1, btn_2, btn_3, btn_4;
     //    private TextView txt1, txt_debug;
     private int count=0;
 //    private String state1="---", state2="---", stateConnect_bef, stateConnect_aft, ConType; // try-except分岐のデバッグ用
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         BluetoothAdapter mBluetoothAdapter; // BTアダプタ
         BluetoothDevice mBtDevice; // BTデバイス
-        Button btn_f, btn_b, btn_l, btn_r; // 送信ボタン
+        Button btn_f; // 送信ボタン
         TextView txt_debug;
         String state1, state2, ConType; // try-except分岐のデバッグ用
 
@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // ボタンのインスタンスを取得
         btn_f = findViewById(R.id.button_f);
-        btn_b = findViewById(R.id.button_b);
-        btn_l = findViewById(R.id.button_l);
-        btn_r = findViewById(R.id.button_r);
-        btn_c = findViewById(R.id.button_count);
-        txt_debug = findViewById(R.id.debugTxt);
+        btn_1 = findViewById(R.id.button_1);
+        btn_2 = findViewById(R.id.button_2);
+        btn_3 = findViewById(R.id.button_3);
+        btn_4 = findViewById(R.id.button_4);
+        //txt_debug = findViewById(R.id.debugTxt);
         // BTの準備 --------------------------------------------------------------
         // BTアダプタのインスタンスを取得
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
         // ソケットを接続する(今回は出力用だけ)
         try {
             mBtSocket.connect();
-
-            mInput = mBtSocket.getInputStream();
             mOutput = mBtSocket.getOutputStream(); // 出力ストリームオブジェクトを得る
             state2 = "OK";
 
@@ -85,84 +83,33 @@ public class MainActivity extends AppCompatActivity {
 //                + "socket connect :" + state2 + "\n"
 //        );
 
-        txt_debug.setText(
-                String.format("device name : %s (%s)\nsocket instance : %s \nsocket connection Type :%s\nsocket connect :%s\n"
-                        ,mBtDevice.getName(),mBtDevice.getAddress(), state1, ConType,state2)
-        );
-
+//        txt_debug.setText(
+//                String.format("device name : %s (%s)\nsocket instance : %s \nsocket connection Type :%s\nsocket connect :%s\n"
+//                        ,mBtDevice.getName(),mBtDevice.getAddress(), state1, ConType,state2)
+//        );
 
         //各ボタン押下時の挙動設定
         //
         btn_f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    mInput = mBtSocket.getInputStream();
+                }catch (IOException e) {
+                    e.printStackTrace();
+                }
                 byte[] buffer = new byte[1024];
                 int bytes;
-                while (true) {
-                    //btn_c.setText("start!");
-                    try {
-
-                        //btn_c.setText("start!");
-                        //Read from the InputStream
-                        bytes = mInput.read(buffer);
-                        String message = new String(buffer, 0, bytes);
-                        Log.d("onClick", message);
-                        try {
-                            Thread.sleep(100);
-                        }catch(InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        btn_c.setText(message);
-                        btn_c.setText(String.valueOf(bytes));
-                    } catch (IOException e) {
-                        break;
-                    }
-
-                }
-            }
-        });
-        btn_b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
                 try {
-                    mOutput.write('b');
-                    count += 1;
-                    btn_c.setText(String.valueOf(count));
+                    bytes = mInput.read(buffer);
+                    String message = new String(buffer, 0, bytes);
+                    Log.d("onClick", message);
+                    String[] splitmessage = message.split("e");
+
+                    //String message2 = message.substring(message.length() - 16);
+                    btn_1.setText(splitmessage[splitmessage.length - 1]);
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        });
-        btn_l.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-//                long time = System.currentTimeMillis();
-                try {
-                    mOutput.write('l');
-                    count += 1;
-                    btn_c.setText(String.valueOf(count));
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        });
-        btn_r.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-//                long time = System.currentTimeMillis();
-                try {
-                    mOutput.write('r');
-                    count += 1;
-                    btn_c.setText(String.valueOf(count));
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+
                 }
             }
         });
