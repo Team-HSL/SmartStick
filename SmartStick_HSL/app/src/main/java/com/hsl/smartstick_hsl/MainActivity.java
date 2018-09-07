@@ -77,16 +77,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             state2 = "NG";
         }
-//        txt_debug.setText("device name :" + mBtDevice.getName() + "(" + mBtDevice.getAddress() + ")\n"
-//                + "socket instance :" + state1 + "\n"
-//                + "socket connection Type :" + ConType + "\n"
-//                + "socket connect :" + state2 + "\n"
-//        );
-
-//        txt_debug.setText(
-//                String.format("device name : %s (%s)\nsocket instance : %s \nsocket connection Type :%s\nsocket connect :%s\n"
-//                        ,mBtDevice.getName(),mBtDevice.getAddress(), state1, ConType,state2)
-//        );
 
         //各ボタン押下時の挙動設定
         //
