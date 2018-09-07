@@ -8,7 +8,6 @@ Markdown記法により段落や箇条書きなどを実現することができ
 #### みんなで読みやすいドキュメントを残しましょう．
 
 ## 構成
-+ ~~ESP32に書き込むコード: BLE_send.ino~~  <- 削除します．
 + ESP32に書き込むコード:      Bluetooth_Classic_send.ino
 + Android　Studioプロジェクト: SmartStick_HSL    
 
