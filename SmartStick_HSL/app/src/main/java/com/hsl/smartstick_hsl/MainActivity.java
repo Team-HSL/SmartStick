@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     //    private Button btn_f, btn_b, btn_l, btn_r, btn_c; // 送信ボタン
     private Button btn_1, btn_2, btn_3, btn_4;
     //    private TextView txt1, txt_debug;
-    private int count=0;
+    private int count = 0;
 //    private String state1="---", state2="---", stateConnect_bef, stateConnect_aft, ConType; // try-except分岐のデバッグ用
 //    private BluetoothServerSocket mBtServerSockets;
 
@@ -51,39 +51,38 @@ public class MainActivity extends AppCompatActivity {
         // BTアダプタのインスタンスを取得
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         // 相手先BTデバイスのインスタンスを取得(相手のデバイスを特定)
-        mBtDevice = mBluetoothAdapter.getRemoteDevice("30:AE:A4:3A:12:16");
-        // BTソケットのインスタンスを取得。ソケット通信の準備
+//        mBtDevice = mBluetoothAdapter.getRemoteDevice("30:AE:A4:3A:12:16");
+//        mBtDevice = mBluetoothAdapter.getRemoteDevice("98:D3:31:30:0E:42");
+        mBtDevice = mBluetoothAdapter.getRemoteDevice("00:18:E5:04:06:5E"); //hc-05
+
+//         BTソケットのインスタンスを取得。ソケット通信の準備
         try {
             // 接続に使用するプロファイルを指定
             mBtSocket = mBtDevice.createRfcommSocketToServiceRecord(
                     UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
-
-            state1 = "OK";
         } catch (IOException e) {
             e.printStackTrace();
-            state1 = "NG";
         }
 
-        ConType = String.valueOf(mBtSocket.getConnectionType());
+//        ConType = String.valueOf(mBtSocket.getConnectionType());
 
         // ソケットを接続する(今回は出力用だけ)
         try {
             mBtSocket.connect();
             mOutput = mBtSocket.getOutputStream(); // 出力ストリームオブジェクトを得る
-            state2 = "OK";
-
+//            btn_2.setText("OK");
         } catch (IOException e) {
             e.printStackTrace();
-            state2 = "NG";
+//            btn_2.setText("NG");
         }
         //各ボタン押下時の挙動設定
-        //
+
         btn_f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     mInput = mBtSocket.getInputStream();
-                }catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 byte[] buffer = new byte[1024];
@@ -95,13 +94,67 @@ public class MainActivity extends AppCompatActivity {
                     String[] splitmessage = message.split("e");
 
                     //String message2 = message.substring(message.length() - 16);
-                    btn_1.setText(splitmessage[splitmessage.length - 1]);
+                    String[] values = splitmessage[splitmessage.length - 2].split(",");
+
+                    if (values[0].equals("0")){
+                        btn_1.setText("-");
+                    }else{
+                        btn_1.setText(values[1]);
+                    }
+
+                    btn_2.setText(values[2]);
+                    btn_3.setText(values[3] + " kcal");
+                    btn_4.setText(values[4] + " steps");
+
+                    Log.d("onClick", splitmessage[0]);
+//                    btn_1.setText(splitmessage[splitmessage.length - 2]);
                 } catch (IOException e) {
 
                 }
             }
         });
+
+
+//        try {
+//            mInput = mBtSocket.getInputStream();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+//        while(true){
+//            byte[] buffer = new byte[1024];
+//            int bytes;
+//            try {
+//                bytes = mInput.read(buffer);
+//                String message = new String(buffer, 0, bytes);
+//                String[] splitmessage = message.split("e");
+//
+//                String[] values = splitmessage[splitmessage.length - 2].split(",");
+//
+//                if (values[0].equals("0")){
+//                    btn_1.setText("-");
+//                }else{
+//                    btn_1.setText(values[1]);
+//                }
+//
+//                btn_2.setText(values[2]);
+//                btn_3.setText(values[3]);
+//                btn_4.setText(values[4]);
+//
+//            } catch (IOException e) {
+//            }
+//
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//            }
+//
+//        }
+//
+//    }
     }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
