@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             state2 = "NG";
         }
-
         //各ボタン押下時の挙動設定
         //
         btn_f.setOnClickListener(new View.OnClickListener() {
