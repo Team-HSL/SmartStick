@@ -23,10 +23,11 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_weight="0.4"
-            android:background="@color/bootstrap_brand_secondary_border"
-            android:drawableLeft="@drawable/ic_refresh"
+            android:background="#2f36ee"
+            android:fontFamily="@font/comfortaa_light"
             android:text="Smart Stick"
-            android:textSize="18sp"
+            android:textColor="#ffffff"
+            android:textSize="30sp"
             tools:layout_editor_absoluteX="75dp"
             tools:layout_editor_absoluteY="27dp" />
 
